@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+media/
+deliverables/
+site/assets/*.mp4
+site/assets/*.jpg
+site/assets/*.pdf
+*.log

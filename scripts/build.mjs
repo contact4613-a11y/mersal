@@ -1,0 +1,93 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {content, assets} from '../src/content.mjs';
+import {freightLink, freightSection} from '../src/freight-template.mjs';
+import {carTaxLink, carTaxDialog, carTaxFrameCard, renderCarTaxPage} from '../src/car-tax-integration.mjs';
+const root = path.resolve(import.meta.dirname, '..');
+const origin = (process.env.PUBLIC_ORIGIN || 'https://8328-i1p5o2nhmgk40jb8ujon5-58026828.sg2.manus.computer').replace(/\/$/,'');
+const e = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lines = s => e(s).replace(/\n/g,'<br>');
+const shapes = {
+ arrow:'<path d="M19 12H5m6-6-6 6 6 6"/>',
+ ship:'<path d="M3 17c3 4 5 4 9 2 4 2 6 2 9-2M3 12l9-3 9 3-3 6H6l-3-6Zm4-2V5h10v5M12 2v3"/>',
+ box:'<path d="m3 7 9-5 9 5v10l-9 5-9-5V7Zm0 0 9 5 9-5M12 12v10M8 4l9 5"/>',
+ truck:'<path d="M3 5h11v12H3V5Zm11 5h4l3 4v3h-7M6 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>',
+ plane:'<path d="m21 3-7 18-3-8-8-3 18-7ZM11 13l10-10"/>',
+ document:'<path d="M7 2h8l5 5v15H4V2h3Zm8 0v6h5M8 12h8M8 16h8"/>',
+ warehouse:'<path d="M3 21V9l9-7 9 7v12M7 21V11h10v10M7 15h10M7 19h10"/>',
+ pin:'<path d="M19 9c0 6-7 12-7 12S5 15 5 9a7 7 0 1 1 14 0Z"/><circle cx="12" cy="9" r="2.5"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z"/>',
+	 phone:'<path d="M5 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 2-3 3-5 2C8 19 3 14 2 6c0-2 1-3 3-3Z"/>',
+	 mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>',
+	 play:'<path d="m9 5 11 7-11 7V5Z"/>',
+	 calculator:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 10h1m6 0h1M8 14h1m6 0h1M8 18h1m6 0h1"/>',
+	 check:'<path d="m5 12 4 4L19 6"/>',
+	 close:'<path d="m6 6 12 12M6 18 18 6"/>',
+	 menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+ download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>',
+ whatsapp:'<path d="M21 11.5A9.5 9.5 0 0 1 7 20l-5 2 2-5A9.5 9.5 0 1 1 21 11.5Z"/><path d="M8 7c1 5 3 7 8 8l1-3-3-1-1 2-3-3 2-1-1-3-3 1Z"/>'
+};
+const icon = (name, cls='') => `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[name]||shapes.box}</svg>`;
+const button = (text,href,cls='',extra='') => `<a class="button ${cls}" href="${href}" ${extra}>${e(text)}${icon('arrow')}</a>`;
+const sectionHead = (label,title,text) => `<div class="section-head"><div><span class="eyebrow">${e(label)}</span><h2>${lines(title)}</h2></div><p>${e(text)}</p></div>`;
+function scene(c){
+ const boxes = Array.from({length:8},(_,i)=>`<div class="cargo cargo-${i} ${i===2||i===5?'cargo-orange':''}" style="--x:${[0,148,296,0,148,296,78,226][i]}px;--y:${[0,0,0,-73,-73,-73,-146,-146][i]}px;--z:${[0,0,0,0,0,0,-10,-10][i]}px"><span class="face front"><i></i><b>${i===2?'MERSAL':'CC · '+String(i+1).padStart(2,'0')}</b></span><span class="face top"></span><span class="face side"></span></div>`).join('');
+ return `<div class="scene-wrap"><div class="scene-glow"></div><div class="scene" role="img" aria-label="${e(c.sceneCaption)}"><div class="container-stack">${boxes}</div><div class="ground"></div></div><div class="scene-route"><span></span><span></span><span></span></div><p class="scene-caption">${icon('box')}${e(c.sceneCaption)}</p></div>`;
+}
+function render(lang){
+ const c=content[lang], ar=lang==='ar', route=ar?'/':'/en/', other=ar?'/en/':'/';
+ const navIds=['home','services','network','about','quote'];
+ const nav=c.nav.map((x,i)=>`<a href="#${navIds[i]}">${e(x)}</a>`).join('');
+ const services=c.serviceNames.map((name,i)=>`
+ <article class="service-card reveal">
+   <div class="service-picture">
+     <img src="${assets.services[i]}" alt="${e(name)}" width="900" height="600" loading="lazy">
+     <span class="service-number">0${i+1}</span>
+     <span class="service-symbol">${icon(['ship','document','truck','warehouse','box'][i])}</span>
+   </div>
+   <div class="service-body">
+     <div class="service-title"><h3>${e(name)}</h3>${icon('arrow')}</div>
+     <p>${e(c.serviceDescriptions[i])}</p>
+     <div class="tags">${c.serviceTags[i].map(t=>`<span>${e(t)}</span>`).join('')}</div>
+     <a class="stretched-link" href="${i===0?'#freight-quote':'#quote'}" ${i===0?'data-freight-request="sea"':''} data-service="${i}" aria-label="${e(c.serviceCta+' — '+name)}"></a>
+   </div>
+ </article>`).join('');
+ const organization={'@context':'https://schema.org','@type':'Organization','name':ar?'مرسال للتخليص الجمركي':'Mersal Customs Clearance','url':origin+route,'logo':origin+assets.logo,'email':'info@mersal-cc.com','telephone':'+966500447325','areaServed':{'@type':'Country','name':'Saudi Arabia'},'contactPoint':{'@type':'ContactPoint','telephone':'+966500447325','email':'info@mersal-cc.com','contactType':'customer service','availableLanguage':['Arabic','English']},'hasOfferCatalog':{'@type':'OfferCatalog','name':ar?'خدمات مرسال':'Mersal services','itemListElement':[...c.serviceNames,c.other].map(name=>({'@type':'Offer','itemOffered':{'@type':'Service','name':name}}))}};
+ return `<!doctype html>
+<html lang="${lang}" dir="${ar?'rtl':'ltr'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#063A66"><title>${e(c.title)}</title><meta name="description" content="${e(c.description)}"><meta name="keywords" content="${ar?'مرسال,التخليص الجمركي,الشحن البحري,نقل الحاويات,ساحات الحاويات,السعودية':'Mersal,customs clearance,sea freight,container trucking,container yards,Saudi Arabia'}"><link rel="canonical" href="${origin+route}"><link rel="alternate" hreflang="ar" href="${origin}/"><link rel="alternate" hreflang="en" href="${origin}/en/"><link rel="alternate" hreflang="x-default" href="${origin}/"><meta property="og:type" content="website"><meta property="og:site_name" content="Mersal"><meta property="og:title" content="${e(c.title)}"><meta property="og:description" content="${e(c.description)}"><meta property="og:url" content="${origin+route}"><meta property="og:locale" content="${ar?'ar_SA':'en_US'}"><meta property="og:image" content="${origin+assets.hero}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(c.title)}"><meta name="twitter:description" content="${e(c.description)}"><meta name="twitter:image" content="${origin+assets.hero}"><link rel="icon" type="image/jpeg" href="${assets.logo}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/styles.css"><link rel="preload" as="image" href="${assets.hero}"><script type="application/ld+json">${JSON.stringify(organization).replace(/</g,'\\u003c')}</script><script defer src="/assets/app.js"></script><script defer src="/assets/car-tax-page.js"></script></head>
+<body data-lang="${lang}">
+<a class="skip-link" href="#main">${ar?'انتقل إلى المحتوى':'Skip to content'}</a>
+<div class="topbar"><div class="wrap"><span><i class="status-dot"></i>${e(c.heroBadge)}<span class="topbar-divider"> / </span>${e(c.badgeDesc)}</span><a href="mailto:info@mersal-cc.com" dir="ltr">info@mersal-cc.com ${icon('mail')}</a></div></div>
+<header class="header"><div class="wrap nav-wrap"><a class="brand" href="${route}" aria-label="${ar?'مرسال — الصفحة الرئيسية':'Mersal — Home'}"><img src="${assets.logo}" alt="${ar?'شعار مرسال للتخليص الجمركي':'Mersal Customs Clearance logo'}" width="450" height="399"></a><nav class="desktop-nav" aria-label="${ar?'القائمة الرئيسية':'Main navigation'}">${nav}</nav><div class="header-actions">${freightLink(lang,icon)}${carTaxLink(lang,icon)}<a class="language" href="${other}" lang="${ar?'en':'ar'}" hreflang="${ar?'en':'ar'}">${icon('globe')}${ar?'EN':'العربية'}</a><button class="track-nav" data-open-tracking>${icon('box')}<span>${e(c.track)}</span></button><button class="menu-toggle" aria-label="${ar?'فتح القائمة':'Open menu'}" aria-expanded="false" aria-controls="mobile-nav">${icon('menu')}</button></div></div><nav id="mobile-nav" class="mobile-nav" aria-label="${ar?'قائمة الجوال':'Mobile navigation'}" hidden>${nav}${carTaxLink(lang,icon,'car-tax-mobile')}${button(c.quote,'#quote','button-orange')}</nav></header>
+<main id="main">
+<section class="hero" id="home"><img class="hero-image" src="${assets.hero}" alt="${ar?'سفينة حاويات في ميناء بحري — صورة تعبيرية':'Container vessel in a seaport — illustrative photograph'}" width="1920" height="1080" fetchpriority="high"><div class="hero-shade"></div><div class="hero-grid"></div><div class="wrap hero-inner"><div class="hero-copy"><span class="eyebrow"><span></span>${e(c.eyebrow)}</span><h1>${e(c.heroTitle.split('\n')[0])}<br><em>${e(c.heroTitle.split('\n')[1])}</em></h1><p>${e(c.heroDesc)}</p><div class="hero-buttons">${button(c.quote,'#quote','button-orange')}<button class="button button-glass" data-open-tracking>${icon('box')}${e(c.track)}</button></div><a class="hero-film" href="#film">${icon('play')}<span>${e(c.watch)}</span><b>00:13</b></a></div></div><div class="hero-bottom wrap"><a href="#services">${e(c.scroll)}<span>↓</span></a><span class="hero-coordinate" dir="ltr">MERSAL / ALWAYS ON COURSE</span></div></section>
+<section class="metrics"><div class="wrap">${c.metrics.map(([n,t])=>`<div><b>${n}<span> / </span></b><p>${e(t)}</p></div>`).join('')}</div></section>
+<section class="section services" id="services"><div class="wrap"><div class="services-frame-intro">${sectionHead(c.servicesLabel,c.servicesTitle,c.servicesIntro)}${carTaxFrameCard(lang,icon)}</div><div class="service-grid">${services}</div><div class="advisory reveal"><div class="advisory-icon">${icon('document')}</div><div><h3>${lines(c.advisoryTitle)}</h3><p>${e(c.advisoryText)}</p></div>${button(c.advisoryCta,'#quote','button-dark','data-service="5"')}</div></div></section>
+<section class="flow section"><div class="wrap flow-layout"><div><span class="eyebrow">${e(c.flowLabel)}</span><h2>${lines(c.flowTitle)}</h2><p class="flow-copy">${e(c.flowText)}</p><ol class="stages">${c.stages.map(([n,title,desc])=>`<li><b>${n}</b><div><h3>${e(title)}</h3><p>${e(desc)}</p></div>${icon('check')}</li>`).join('')}</ol></div>${scene(c)}</div></section>
+	<section class="film" id="film"><div class="film-bg" style="background-image:url('${assets.hero}')"></div><div class="film-overlay"></div><div class="wrap film-content"><span class="eyebrow">${e(c.filmLabel)}</span><h2>${e(c.filmTitle)}</h2><p>${e(c.filmText)}</p><button class="film-play" data-open-film aria-label="${e(c.filmPlay)}">${icon('play')}</button><span class="film-time">00:13 / MERSAL</span><details class="transcript"><summary>${e(c.filmTranscriptTitle)}</summary><p>${e(c.filmTranscript)}</p></details></div></section>
+	<section class="section coverage" id="network"><div class="wrap">${sectionHead(c.coverageLabel,c.coverageTitle,c.coverageText)}<div class="coverage-grid">${c.coverage.map((locations,i)=>`<article class="coverage-card reveal"><div class="coverage-top">${icon(['ship','plane','truck'][i])}<span>${e(c.coverageCounts[i])}</span></div><h3>${e(c.coverageCategories[i])}</h3><ul>${locations.map(s=>`<li>${icon('pin')}${e(s)}</li>`).join('')}</ul></article>`).join('')}</div><p class="coverage-note">${icon('globe')}${e(c.coverageNote)}</p></div></section>
+	<section class="section reels" id="motion"><div class="wrap">${sectionHead(c.reelsLabel,c.reelsTitle,c.reelsText)}<div class="reels-grid">${c.reelsNames.map((title,i)=>`<article class="reel-card"><div class="reel-screen"><video controls playsinline preload="none" poster="${assets.services[[0,1,2][i]]}" aria-label="${e(title)}"><source src="${assets.reels[i]}" type="video/mp4"></video><span class="reel-chip">MERSAL / 0${i+1}</span></div><div class="reel-caption"><h3>${e(title)}</h3><a href="${assets.reels[i]}" download aria-label="${e(c.reelsDownload+' — '+title)}">${icon('download')}</a></div></article>`).join('')}</div></div></section>
+	<section class="section about" id="about"><div class="wrap about-layout"><div class="about-art"><img src="${assets.services[4]}" width="900" height="600" alt="${e(c.serviceNames[4])}" loading="lazy"><span class="about-label" dir="ltr">CONNECTED BY MERSAL</span></div><div><span class="eyebrow">${e(c.aboutLabel)}</span><h2>${lines(c.aboutTitle)}</h2><p>${e(c.aboutText)}</p><ul class="values">${c.aboutValues.map(t=>`<li>${icon('check')}${e(t)}</li>`).join('')}</ul>${button(c.quote,'#quote','button-dark')}</div></div></section>
+${freightSection(lang,icon)}
+	<section class="section quote" id="quote"><div class="wrap quote-layout"><div><span class="eyebrow">${e(c.quoteLabel)}</span><h2>${lines(c.quoteTitle)}</h2><p>${e(c.quoteText)}</p><a class="contact-card" href="tel:+966500447325">${icon('phone')}<div><span>${e(c.phoneLink)}</span><strong dir="ltr">0500447325</strong></div>${icon('arrow')}</a><a class="contact-card" href="mailto:info@mersal-cc.com">${icon('mail')}<div><span>${e(c.emailLink)}</span><strong dir="ltr">info@mersal-cc.com</strong></div>${icon('arrow')}</a></div><form class="quote-form" id="quote-form"><div class="form-grid"><label>${e(c.name)} <span>*</span><input id="name" name="name" required maxlength="100" autocomplete="organization" placeholder="${e(c.fullNamePlaceholder)}"></label><label>${e(c.phone)} <span>*</span><input id="phone" name="phone" type="tel" required minlength="8" maxlength="24" autocomplete="tel" placeholder="${e(c.phonePlaceholder)}" dir="ltr"></label><label>${e(c.email)}<input id="email" name="email" type="email" maxlength="150" autocomplete="email" placeholder="${e(c.emailPlaceholder)}" dir="ltr"></label><label>${e(c.service)} <span>*</span><select id="service" name="service" required><option value="">${e(c.servicePlaceholder)}</option>${[...c.serviceNames,c.other].map((s,i)=>`<option value="${i}">${e(s)}</option>`).join('')}</select></label><label class="form-wide">${e(c.details)} <span>*</span><textarea id="details" name="details" required maxlength="2000" rows="4" placeholder="${e(c.detailsPlaceholder)}"></textarea></label></div><button type="submit" class="button button-orange">${icon('whatsapp')}${e(c.sendWhatsApp)}${icon('arrow')}</button><button type="submit" name="channel" value="email" class="email-submit">${icon('mail')}${e(c.sendEmail)}</button><p class="form-status" role="status" aria-live="polite"></p><p class="privacy">${e(c.privacy)}</p></form></div></section>
+	</main>
+	<footer class="footer"><div class="wrap footer-main"><div class="footer-brand"><a href="${route}"><img src="${assets.logo}" width="450" height="399" alt="Mersal"></a><p>${e(c.footer)}</p></div><div><h3>${e(c.quick)}</h3><nav>${nav}</nav></div><div><h3>${e(c.contact)}</h3><a href="tel:+966500447325" dir="ltr">0500447325</a><a href="mailto:info@mersal-cc.com" dir="ltr">info@mersal-cc.com</a><a href="https://wa.me/966500447325" target="_blank" rel="noopener noreferrer">WhatsApp ${icon('arrow')}</a></div></div><div class="wrap footer-bottom"><p>© ${new Date().getUTCFullYear()} ${e(c.rights)}</p><a href="#home">${e(c.backTop)} ↑</a><span dir="ltr">MERSAL / CUSTOMS & LOGISTICS</span></div></footer>
+<a class="whatsapp-float" href="https://wa.me/966500447325" target="_blank" rel="noopener noreferrer" aria-label="${ar?'تواصل مع مرسال عبر واتساب':'Contact Mersal on WhatsApp'}">${icon('whatsapp')}</a>
+${freightLink(lang,icon,'freight-float')}
+${carTaxDialog(lang,icon)}
+<dialog class="tracking-dialog" id="tracking-dialog" aria-labelledby="tracking-title"><button class="dialog-close" data-close-dialog aria-label="${e(c.close)}">${icon('close')}</button><div class="dialog-symbol">${icon('box')}</div><span class="eyebrow">MERSAL / TRACKING</span><h2 id="tracking-title">${e(c.trackTitle)}</h2><p>${e(c.trackDescription)}</p><label for="container-number">${e(c.container)}</label><input id="container-number" placeholder="${e(c.containerPlaceholder)}" maxlength="11" autocomplete="off" dir="ltr"><p class="tracking-status" role="status" aria-live="polite"></p><a class="button button-orange" id="tracking-link" href="https://www.track-trace.com/container" target="_blank" rel="noopener noreferrer">${e(c.trackButton)}${icon('arrow')}</a><small>${e(c.trackHelper)}</small></dialog>
+<dialog class="video-dialog" id="video-dialog" aria-label="${e(c.filmPlay)}"><button class="dialog-close" data-close-dialog aria-label="${e(c.close)}">${icon('close')}</button><video controls playsinline preload="none" poster="${assets.hero}"><source src="${assets.overview}" type="video/mp4"></video></dialog>
+<script type="application/json" id="client-content">${JSON.stringify({trackInvalid:c.trackInvalid,trackReady:c.trackReady,formInvalid:c.formInvalid,formReady:c.formReady,required:c.required,quote:c.quote,names:[...c.serviceNames,c.other],name:c.name,phone:c.phone,email:c.email,service:c.service,details:c.details}).replace(/</g,'\\u003c')}</script>
+</body></html>`;
+}
+await fs.mkdir(path.join(root,'site/en'),{recursive:true});
+for(const lang of ['ar','en']) await fs.writeFile(path.join(root,lang==='ar'?'site/index.html':'site/en/index.html'),render(lang));
+await fs.copyFile(path.join(root,'src/styles.css'),path.join(root,'site/assets/styles.css'));
+await fs.copyFile(path.join(root,'src/app.js'),path.join(root,'site/assets/app.js'));
+for(const name of ['freight.js','freight-core.js','car-tax-page.js']) await fs.copyFile(path.join(root,'src',name),path.join(root,'site/assets',name));
+for(const lang of ['ar','en']) await fs.writeFile(path.join(root,lang==='ar'?'site/car-tax.html':'site/en/car-tax.html'),renderCarTaxPage(lang,{origin,logo:assets.logo,icon}));
+const pageRoutes = [{path:'/',title:'مرسال للتخليص الجمركي'},{path:'/en/',title:'Mersal Customs Clearance'},{path:'/car-tax.html',title:'احسبها قبل تستوردها — مرسال'},{path:'/en/car-tax.html',title:'Calculate before you import — Mersal'}];
+await fs.writeFile(path.join(root,'site/manus-routes.json'),JSON.stringify({routes:pageRoutes},null,2));
+await fs.writeFile(path.join(root,'site/robots.txt'),`User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${origin}/sitemap.xml\n`);
+await fs.writeFile(path.join(root,'site/sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pageRoutes.map(({path})=>`<url><loc>${origin+path}</loc></url>`).join('')}</urlset>`);
+console.log(`Built Arabic and English pages, route manifest, metadata & sitemap for ${origin}`);

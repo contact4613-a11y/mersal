@@ -1,0 +1,14 @@
+{
+  "name": "mersal-customs-clearance",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-interactions.mjs && node scripts/check-freight.mjs && node scripts/check-car-tax.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

@@ -1,0 +1,76 @@
+export const assets = {
+  logo: '/manus-storage/logo_712ff0d3.jpg',
+  logoTransparent: '/manus-storage/mersal-logo-transparent_23077a5c.png',
+  hero: '/manus-storage/mersal-hero-branded_fd39d6e5.webp',
+  brand: '/manus-storage/async-images/qVyIsf9d6S6XPa1VYd6y6L/image-2.webp',
+  services: [
+    '/manus-storage/mersal-sea-branded_f63e41b6.webp',
+    '/manus-storage/mersal-customs-branded_9f050811.webp',
+    '/manus-storage/mersal-road-branded_15ba7c58.webp',
+    '/manus-storage/mersal-storage-branded_86017078.webp',
+    '/manus-storage/mersal-yard-branded_059937a8.webp'
+  ],
+  overview: '/manus-storage/mersal-overview_e4890330.mp4',
+  reels: ['/manus-storage/mersal-reel-sea_8b322fd9.mp4','/manus-storage/mersal-reel-customs_11aafccf.mp4','/manus-storage/mersal-reel-road_22714fcf.mp4']
+};
+export const content = {
+  ar: {
+    title:'مرسال | التخليص الجمركي والشحن البحري في السعودية',
+    description:'مرسال لخدمات الشحن البحري والتخليص الجمركي للواردات والصادرات والترانزيت، والنقل البري والتخزين والاستشارات الجمركية. اطلب عرض سعر لخدماتك اللوجستية.',
+    nav:['الرئيسية','خدماتنا','شبكة التغطية','عن مرسال','تواصل معنا'],
+    eyebrow:'مرسال للتخليص الجمركي',
+    heroTitle:'الاستيراد قرارك\nومرسال مستشارك',
+    heroDesc:'من البحر إلى البر، نربط كل خطوة في رحلتك اللوجستية. شحن، تخليص، نقل وتخزين… بخبرة تفتح الطريق.',
+    quote:'اطلب عرض سعر', track:'تتبع حاويتك', explore:'اكتشف خدماتنا', watch:'شاهد مرسال في 13 ثانية',
+    heroBadge:'حلول لوجستية مترابطة', badgeDesc:'بحرًا · برًا · جوًا',
+    scroll:'اسحب لاكتشاف المزيد',
+    metrics:[['01','شريك لكل مراحل الشحنة'],['03','بحر · جو · بر'],['10','منافذ ضمن شبكة التغطية']],
+    servicesLabel:'01 / خدماتنا', servicesTitle:'كل خطوة،\nفي أيدٍ تعرف الطريق.', servicesIntro:'من المستند الأول حتى الوصول إلى الوجهة، خدمات تتكامل حول احتياجات أعمالك.',
+    serviceNames:['الشحن البحري','التخليص الجمركي','النقل البري للحاويات','التخزين','ساحات تخزين الحاويات'],
+    serviceDescriptions:[
+      'تنسيق شحناتك البحرية ومتابعة إجراءاتها، وربط حركة البضائع بمواعيد الميناء ووجهتك التالية.',
+      'تجهيز ومتابعة إجراءات التخليص للواردات والصادرات والترانزيت، ومراجعة مستندات الشحن ومتطلبات الفسح.',
+      'تنسيق نقل الحاويات بين الموانئ والساحات ومواقع العملاء، ضمن خطة واضحة تتناسب مع شحنتك.',
+      'حلول تخزين وتنظيم البضائع تدعم استمرارية أعمالك وتسهّل تنسيق الاستلام والتسليم.',
+      'تنسيق استقبال الحاويات وتخزينها ومناولتها في الساحات، لربط الميناء بخطوتك التشغيلية التالية.'
+    ],
+    serviceTags:[['شحنات بحرية','تنسيق لوجستي'],['واردات','صادرات','ترانزيت'],['حاويات','توصيل'],['بضائع','تنظيم'],['مناولة','تخزين']],
+    serviceCta:'ناقش احتياجك',
+    advisoryTitle:'قرار جمركي أوضح.\nرحلة تجارية أسهل.', advisoryText:'الاستشارات الجمركية جزء من منظومتنا. نساعدك على فهم الإجراءات ومتطلبات المستندات قبل أن تتحرك شحنتك.', advisoryCta:'اطلب استشارة جمركية',
+    flowLabel:'02 / من الميناء إلى وجهتك',flowTitle:'منظومة واحدة.\nلرحلة مترابطة.', flowText:'نربط إجراءات التخليص بالشحن والنقل والتخزين، لتكون تفاصيل رحلتك واضحة من البداية.',
+    stages:[['01','تنسيق الشحن','البداية على المسار الصحيح'],['02','التخليص الجمركي','مستندات وإجراءات مترابطة'],['03','النقل والتخزين','الخطوة التالية نحو وجهتك']],
+    sceneCaption:'واجهة حاويات ثلاثية الأبعاد · حرّك المؤشر لاستكشافها',
+    filmLabel:'مرسال، في مشهد واحد', filmTitle:'خبرة تفتح الطريق.',filmText:'شاهد منظومة خدماتنا في 13 ثانية.',filmPlay:'تشغيل الفيديو',filmTranscriptTitle:'النص الصوتي', filmTranscript:'مرسال للشحن البحري، والتخليص الجمركي للواردات والصادرات والترانزيت، والنقل البري للحاويات، والتخزين وساحات الحاويات، والاستشارات الجمركية. خبرة تفتح الطريق.',
+    coverageLabel:'03 / شبكة التغطية', coverageTitle:'حاضرون عند\nبوابات أعمالك.', coverageText:'مواقع التغطية التي قدمتها المؤسسة، عبر الموانئ البحرية والمنافذ الجوية والبرية في المملكة.',
+    coverageCategories:['الموانئ البحرية','المنافذ الجوية','المنافذ البرية'],coverageCounts:['ميناءان','مطاران','6 منافذ'],
+    coverage:[['ميناء جدة الإسلامي','ميناء الملك عبدالعزيز بالدمام'],['مطار الملك خالد الدولي','مطار الملك عبدالعزيز بجدة'],['منفذ جسر الملك فهد','منفذ البطحاء','منفذ سلوى','منفذ الوديعة','منفذ جديدة عرعر','منفذ الحديثة']],
+    coverageNote:'للتأكد من توافر الخدمة في المنفذ المطلوب، تواصل مع فريق مرسال.',
+    reelsLabel:'04 / مرسال في حركة',reelsTitle:'ثلاث قصص.\nمسار واحد.',reelsText:'لقطات قصيرة من عالم الشحن والتخليص والنقل.',reelsNames:['رحلتك تبدأ من البحر','خبرة تفتح الطريق','من الميناء إلى وجهتك'],reelsDownload:'تحميل الريل',
+    aboutLabel:'عن مرسال',aboutTitle:'نُبسّط التعقيد.\nونُبقي أعمالك تتحرك.',aboutText:'مرسال للتخليص الجمركي تجمع خدمات الشحن والتخليص والنقل والتخزين في تجربة متناسقة. نركز على وضوح الخطوات والتنسيق حول احتياجات كل شحنة.',aboutValues:['تنسيق مترابط','تواصل واضح','حلول تناسب شحنتك'],
+    quoteLabel:'05 / لنبدأ رحلتك',quoteTitle:'شحنتك التالية\nتبدأ بمحادثة.',quoteText:'أخبرنا عن احتياجك، وسنناقش معك الخدمة المناسبة. النموذج يجهّز رسالة للتواصل المباشر ولا يرسلها تلقائيًا.',
+    name:'الاسم / اسم المنشأة',phone:'رقم الجوال',email:'البريد الإلكتروني',service:'الخدمة المطلوبة',servicePlaceholder:'اختر خدمة',details:'تفاصيل الشحنة',detailsPlaceholder:'نوع البضاعة، منفذ الوصول، الوجهة، عدد الحاويات…',sendWhatsApp:'جهّز طلبك على واتساب',sendEmail:'جهّز طلبك بالبريد',privacy:'لا تُحفظ بيانات هذا النموذج على الموقع. ستراجع رسالتك قبل إرسالها عبر القناة المختارة.',
+    phoneLink:'اتصل بمرسال',emailLink:'راسل فريقنا',other:'استشارات جمركية',
+    footer:'من الميناء إلى وجهتك، خبرة تفتح الطريق.',rights:'مرسال للتخليص الجمركي. جميع الحقوق محفوظة.',quick:'روابط سريعة',contact:'تواصل معنا',backTop:'العودة للأعلى',
+    trackTitle:'تتبع الحاويات',trackDescription:'بوابة للخطوط الملاحية عبر خدمة Track-trace الخارجية. افتح الدليل واختر الناقل؛ نتائج التتبع يقدمها مزود الخدمة وليس موقع مرسال.',container:'رقم الحاوية (اختياري)',containerPlaceholder:'مثال: ABCU1234567',trackButton:'افتح بوابة الخطوط الملاحية',trackHelper:'يُنقل رقم الحاوية إلى الحافظة عند إدخاله لتلصقه في البوابة. تدعم البوابة خطوطًا متعددة؛ لا نضمن شمول كل ناقل.',trackInvalid:'أدخل 4 أحرف إنجليزية و7 أرقام، أو اترك الحقل فارغًا.',trackReady:'تم نسخ الرقم؛ يمكنك لصقه في بوابة التتبع.',close:'إغلاق',required:'هذا الحقل مطلوب',formInvalid:'راجع الحقول المطلوبة قبل تجهيز الرسالة.',formReady:'تم تجهيز طلبك. راجعه وأرسله في القناة المختارة.',fullNamePlaceholder:'كيف نخاطبك؟',emailPlaceholder:'name@company.com',phonePlaceholder:'05xxxxxxxx',readMore:'عرض التفاصيل'
+  },
+  en: {
+    title:'Mersal | Customs Clearance & Sea Freight in Saudi Arabia',
+    description:'Mersal for sea freight, import, export and transit customs clearance, container trucking, storage and customs consultancy. Request your logistics quotation.',
+    nav:['Home','Our services','Our network','About Mersal','Contact us'],eyebrow:'MERSAL CUSTOMS CLEARANCE',
+    heroTitle:'Importing is your decision\nMersal is your advisor',heroDesc:'From sea to land, we connect every step of your logistics journey. Freight, clearance, transport and storage. Expertise that clears the way.',
+    quote:'Request a quote',track:'Track your container',explore:'Explore our services',watch:'Mersal in 13 seconds',heroBadge:'Connected logistics solutions',badgeDesc:'Sea · Land · Air',scroll:'Scroll to explore',
+    metrics:[['01','Partner for every cargo stage'],['03','Sea · Air · Land'],['10','Ports & border gateways']],
+    servicesLabel:'01 / OUR SERVICES',servicesTitle:'Every step.\nIn experienced hands.',servicesIntro:'From the first document to the final destination, connected services built around your business.',
+    serviceNames:['Sea freight','Customs clearance','Container trucking','Storage','Container storage yards'],serviceDescriptions:['Coordinating ocean shipments and their procedures, connecting cargo movements with port schedules and your next destination.','Preparing and following up clearance procedures for imports, exports and transit, with shipment documents and release requirements.','Coordinating container movements between ports, yards and customer locations through a clear shipment-specific plan.','Goods storage and organization solutions that support your operations and simplify receiving and delivery.','Coordinating container receipt, storage and handling in yards, connecting the port to your next operational step.'],
+    serviceTags:[['OCEAN CARGO','COORDINATION'],['IMPORT','EXPORT','TRANSIT'],['CONTAINERS','DELIVERY'],['GOODS','ORGANIZATION'],['HANDLING','STORAGE']],serviceCta:'Discuss your needs',
+    advisoryTitle:'Clearer customs decisions.\nSmoother trade journeys.',advisoryText:'Customs consultancy is part of our connected service. Understand procedures and document requirements before your cargo moves.',advisoryCta:'Request customs advice',
+    flowLabel:'02 / FROM PORT TO DESTINATION',flowTitle:'One ecosystem.\nA connected journey.',flowText:'We connect clearance with freight, transport and storage, keeping the details of your journey clear from the start.',stages:[['01','Freight coordination','Start on the right course'],['02','Customs clearance','Connected documents & procedures'],['03','Transport & storage','The next step to your destination']],sceneCaption:'Interactive 3D container scene · move your pointer to explore',
+    filmLabel:'MERSAL, IN ONE FILM',filmTitle:'Expertise that clears the way.',filmText:'Discover our connected services in 13 seconds.',filmPlay:'Play film',filmTranscriptTitle:'Arabic voice-over transcript (English translation)',filmTranscript:'Mersal for sea freight; customs clearance for imports, exports and transit; container trucking; storage and container yards; and customs consultancy. Expertise that clears the way.',
+    coverageLabel:'03 / OUR NETWORK',coverageTitle:'At the gateways\nof your business.',coverageText:'Service coverage locations supplied by Mersal across Saudi Arabia’s seaports, airports and land gateways.',coverageCategories:['Seaports','Airports','Land gateways'],coverageCounts:['2 ports','2 airports','6 gateways'],coverage:[['Jeddah Islamic Port','King Abdulaziz Port, Dammam'],['King Khalid International Airport','King Abdulaziz International Airport, Jeddah'],['King Fahd Causeway','Al Batha Border Crossing','Salwa Border Crossing','Al Wadiah Border Crossing','Jadidat Arar Border Crossing','Al Hadithah Border Crossing']],coverageNote:'Contact the Mersal team to confirm availability at your required gateway.',
+    reelsLabel:'04 / MERSAL IN MOTION',reelsTitle:'Three stories.\nOne course.',reelsText:'Short films from the world of freight, clearance and transport.',reelsNames:['Your journey starts at sea','Expertise clears the way','From port to destination'],reelsDownload:'Download reel',
+    aboutLabel:'ABOUT MERSAL',aboutTitle:'Less complexity.\nMore forward motion.',aboutText:'Mersal Customs Clearance brings freight, clearance, transport and storage into one coordinated experience. We focus on clear steps and coordination around each shipment’s needs.',aboutValues:['Connected coordination','Clear communication','Shipment-specific solutions'],
+    quoteLabel:'05 / LET’S MOVE YOUR BUSINESS',quoteTitle:'Your next shipment\nstarts with a conversation.',quoteText:'Tell us what you need, and let’s discuss the right service. This form prepares a direct-contact message; it does not send automatically.',name:'Name / company',phone:'Mobile number',email:'Email address',service:'Required service',servicePlaceholder:'Select a service',details:'Shipment details',detailsPlaceholder:'Goods, arrival gateway, destination, number of containers…',sendWhatsApp:'Prepare WhatsApp request',sendEmail:'Prepare email request',privacy:'This website does not store your form data. Review your message before sending through your chosen channel.',phoneLink:'Call Mersal',emailLink:'Email our team',other:'Customs consultancy',
+    footer:'From port to destination, expertise that clears the way.',rights:'Mersal Customs Clearance. All rights reserved.',quick:'Quick links',contact:'Get in touch',backTop:'Back to top',
+    trackTitle:'Container tracking',trackDescription:'A gateway to shipping lines via the external Track-trace service. Open the directory and select your carrier. Tracking results are provided by the service, not by Mersal.',container:'Container number (optional)',containerPlaceholder:'Example: ABCU1234567',trackButton:'Open shipping-line directory',trackHelper:'If entered, your container number is copied so you can paste it in the directory. The directory supports multiple lines; complete carrier coverage is not guaranteed.',trackInvalid:'Use 4 English letters and 7 digits, or leave this field empty.',trackReady:'Number copied. Paste it in the tracking directory.',close:'Close',required:'This field is required',formInvalid:'Please review the required fields before preparing your message.',formReady:'Your request is ready. Review and send it in your chosen channel.',fullNamePlaceholder:'How should we address you?',emailPlaceholder:'name@company.com',phonePlaceholder:'+966 5x xxx xxxx',readMore:'View details'
+  }
+};

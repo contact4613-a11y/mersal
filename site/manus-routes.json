@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "title": "مرسال للتخليص الجمركي"
+    },
+    {
+      "path": "/en/",
+      "title": "Mersal Customs Clearance"
+    },
+    {
+      "path": "/car-tax.html",
+      "title": "احسبها قبل تستوردها — مرسال"
+    },
+    {
+      "path": "/en/car-tax.html",
+      "title": "Calculate before you import — Mersal"
+    }
+  ]
+}
